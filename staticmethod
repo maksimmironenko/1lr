@@ -1,0 +1,58 @@
+class Client:
+    def __init__(self, last_name, first_name, middle_name, address, phone):
+        # Проверяем валидность данных через статические методы
+        self.last_name = Client.validate_last_name(last_name)
+        self.first_name = Client.validate_first_name(first_name)
+        self.middle_name = Client.validate_middle_name(middle_name)
+        self.address = Client.validate_address(address)
+        self.phone = Client.validate_phone(phone)
+
+    # Статические методы для валидации
+    @staticmethod
+    def validate_last_name(last_name):
+        if not last_name or not last_name.isalpha():
+            raise ValueError("Фамилия должна содержать только буквы и не быть пустой")
+        return last_name
+
+    @staticmethod
+    def validate_first_name(first_name):
+        if not first_name or not first_name.isalpha():
+            raise ValueError("Имя должно содержать только буквы и не быть пустым")
+        return first_name
+
+    @staticmethod
+    def validate_middle_name(middle_name):
+        if not middle_name or not middle_name.isalpha():
+            raise ValueError("Отчество должно содержать только буквы и не быть пустым")
+        return middle_name
+
+    @staticmethod
+    def validate_address(address):
+        if not address or len(address) < 5:
+            raise ValueError("Адрес должен быть не менее 5 символов и не пустым")
+        return address
+
+    @staticmethod
+    def validate_phone(phone):
+        if not phone or not phone.startswith("+") or not phone[1:].isdigit() or len(phone) < 10:
+            raise ValueError("Телефон должен начинаться с '+' и содержать не менее 10 цифр")
+        return phone
+
+    # Метод для отображения информации о клиенте
+    def show_info(self):
+        print("Клиент:")
+        print(f"ФИО: {self.last_name} {self.first_name} {self.middle_name}")
+        print(f"Адрес: {self.address}")
+        print(f"Телефон: {self.phone}")
+
+
+# Пример использования
+try:
+    # Создаём объект с валидными данными
+    client = Client("Мироненко", "Максим", "Алексеевич", "г. Краснодар", "+79186543210")
+    client.show_info()
+
+    # Пробуем создать объект с невалидной фамилией
+    invalid_client = Client("123", "Максим", "Алексеевич", "г. Краснодар", "+79186543210")
+except ValueError as e:
+    print("Ошибка:", e)

@@ -1,0 +1,61 @@
+class Client:
+    def __init__(self, last_name, first_name, middle_name, address, phone):
+        # Приватные поля
+        self.__last_name = last_name
+        self.__first_name = first_name
+        self.__middle_name = middle_name
+        self.__address = address
+        self.__phone = phone
+
+    # Геттеры для получения данных
+    def get_last_name(self):
+        return self.__last_name
+
+    def get_first_name(self):
+        return self.__first_name
+
+    def get_middle_name(self):
+        return self.__middle_name
+
+    def get_address(self):
+        return self.__address
+
+    def get_phone(self):
+        return self.__phone
+
+    # Сеттеры для изменения данных
+    def set_last_name(self, last_name):
+        self.__last_name = last_name
+
+    def set_first_name(self, first_name):
+        self.__first_name = first_name
+
+    def set_middle_name(self, middle_name):
+        self.__middle_name = middle_name
+
+    def set_address(self, address):
+        self.__address = address
+
+    def set_phone(self, phone):
+        self.__phone = phone
+
+    # Метод для отображения информации о клиенте
+    def show_info(self):
+        print("Клиент:")
+        print("ФИО:", self.__last_name, self.__first_name, self.__middle_name)
+        print("Адрес:", self.__address)
+        print("Телефон:", self.__phone)
+
+
+# Пример использования
+client = Client("Мироненко", "Максим", "Алексеевич", "г. Краснодар, ул. Лермонтова, д. 15", "+7 (918) 654-32-10")
+
+# Вывод информации о клиенте
+client.show_info()
+
+# Изменение адреса и телефона
+client.set_address("г. Сочи, ул. Виноградная, д. 20")
+client.set_phone("+7 (928) 123-45-67")
+
+# Вывод обновлённой информации
+client.show_info()

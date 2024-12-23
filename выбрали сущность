@@ -1,0 +1,53 @@
+class Client:
+    def __init__(self, last_name, first_name, middle_name, address, phone):
+        # Инициализация данных клиента
+        self.last_name = last_name
+        self.first_name = first_name
+        self.middle_name = middle_name
+        self.address = address
+        self.phone = phone
+
+    def get_full_name(self):
+        # Возвращает полное имя клиента
+        return f"{self.last_name} {self.first_name} {self.middle_name}"
+
+    def update_address(self, new_address):
+        # Обновляет адрес клиента
+        self.address = new_address
+        print(f"Адрес обновлен на: {self.address}")
+
+    def update_phone(self, new_phone):
+        # Обновляет телефон клиента
+        self.phone = new_phone
+        print(f"Телефон обновлен на: {self.phone}")
+
+    def print_client_info(self):
+        # Выводит всю информацию о клиенте
+        print("Информация о клиенте:")
+        print(f"ФИО: {self.get_full_name()}")
+        print(f"Адрес: {self.address}")
+        print(f"Телефон: {self.phone}")
+
+
+# Пример использования класса
+if name == "__main__":
+    # Создаем клиента
+    client = Client(
+        last_name="Мироненко",
+        first_name="Максим",
+        middle_name="Алексеевич",
+        address="г. Краснодар, ул. Лермонтова, д. 15",
+        phone="+7 (918) 654-32-10"
+    )
+
+    # Выводим информацию о клиенте
+    client.print_client_info()
+
+    # Обновляем адрес клиента
+    client.update_address("г. Сочи, ул. Виноградная, д. 20")
+
+    # Обновляем телефон клиента
+    client.update_phone("+7 (928) 123-45-67")
+
+    # Выводим обновленную информацию о клиенте
+    client.print_client_info()

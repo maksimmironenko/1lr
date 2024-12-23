@@ -1,0 +1,78 @@
+import json
+
+class Client:
+    def __init__(self, last_name, first_name, middle_name, address, phone):
+        # Проверяем данные перед созданием клиента
+        self.last_name = self.validate_string(last_name, "Фамилия")
+        self.first_name = self.validate_string(first_name, "Имя")
+        self.middle_name = self.validate_string(middle_name, "Отчество")
+        self.address = self.validate_address(address)
+        self.phone = self.validate_phone(phone)
+
+    # Метод для создания клиента из строки (CSV)
+    @classmethod
+    def from_csv(cls, csv_string):
+        fields = csv_string.split(",")  # Разделяем строку по запятым
+        if len(fields) != 5:
+            raise ValueError("CSV строка должна содержать 5 элементов: фамилия, имя, отчество, адрес, телефон")
+        return cls(fields[0].strip(), fields[1].strip(), fields[2].strip(), fields[3].strip(), fields[4].strip())
+
+    # Метод для создания клиента из JSON строки
+    @classmethod
+    def from_json(cls, json_string):
+        try:
+            data = json.loads(json_string)  # Преобразуем JSON строку в словарь
+        except json.JSONDecodeError:
+            raise ValueError("Некорректный JSON формат")
+        return cls(
+            data.get("last_name", ""),
+            data.get("first_name", ""),
+            data.get("middle_name", ""),
+            data.get("address", ""),
+            data.get("phone", "")
+        )
+
+    # Проверка строкового поля (фамилия, имя, отчество)
+    def validate_string(self, value, field_name):
+        if not value or not value.isalpha():
+            raise ValueError(f"{field_name} должна содержать только буквы и не быть пустой")
+        return value
+
+    # Проверка адреса
+    def validate_address(self, address):
+        if not address or len(address) < 5:
+            raise ValueError("Адрес должен быть не менее 5 символов и не пустым")
+        return address
+
+    # Проверка телефона
+    def validate_phone(self, phone):
+        if not phone or not phone.startswith("+") or not phone[1:].isdigit() or len(phone) < 10:
+            raise ValueError("Телефон должен начинаться с '+' и содержать не менее 10 цифр")
+        return phone
+
+    # Метод для вывода информации о клиенте
+    def show_info(self):
+        print("Клиент:")
+        print(f"ФИО: {self.last_name} {self.first_name} {self.middle_name}")
+        print(f"Адрес: {self.address}")
+        print(f"Телефон: {self.phone}")
+
+
+# Пример использования
+try:
+    # Создаем клиента с правильными данными
+    client1 = Client("Мироненко", "Максим", "Алексеевич", "г. Краснодар", "+79186543210")
+    client1.show_info()
+
+    # Создаем клиента из CSV строки
+    csv_data = "Максименко, Никита, Сергеевич, г. Краснодар, +79284513781"
+    client2 = Client.from_csv(csv_data)
+    client2.show_info()
+
+    # Создаем клиента из JSON строки
+    json_data = '{"last_name": "Мавлюкаев", "first_name": "Эльдар", "middle_name": "Рустамович", "address": "г. Сочи", "phone": "+79261234567"}'
+    client3 = Client.from_json(json_data)
+    client3.show_info()
+
+except ValueError as e:
+    print("Ошибка:", e)

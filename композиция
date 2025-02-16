@@ -1,6 +1,5 @@
 class ClientData:
     def __init__(self, last_name, phone):
-        # Общие поля для всех клиентов
         self.last_name = last_name
         self.phone = phone
 
@@ -8,10 +7,14 @@ class ClientData:
         print(f"Фамилия: {self.last_name}")
         print(f"Телефон: {self.phone}")
 
+    #  метод str для форматированного вывода
+    def __str__(self):
+        return f"Фамилия: {self.last_name}, Телефон: {self.phone}"
+
 
 class Client:
     def __init__(self, last_name, first_name, middle_name, address, phone):
-        self.basic_data = ClientData(last_name, phone) # происходит композиция,создается экземпляр ClientData
+        self.basic_data = ClientData(last_name, phone)  # происходит композиция, создается экземпляр ClientData
         # Поля, которые есть только у полного клиента
         self.first_name = first_name
         self.middle_name = middle_name
@@ -24,10 +27,14 @@ class Client:
         print(f"Отчество: {self.middle_name}")
         print(f"Адрес: {self.address}")
 
+    #  метод str для форматированного вывода
+    def __str__(self):
+        return (f"{self.basic_data}, Имя: {self.first_name}, Отчество: {self.middle_name}, Адрес: {self.address}")
+
 
 class ShortClient:
     def __init__(self, last_name, initials, phone):
-        self.basic_data = ClientData(last_name, phone) # происходит композиция, создается экземпляр ClientData
+        self.basic_data = ClientData(last_name, phone)  # происходит композиция, создается экземпляр ClientData
         # Поля, которые есть только у краткого клиента
         self.initials = initials
 
@@ -35,6 +42,10 @@ class ShortClient:
         print("Краткая информация о клиенте:")
         self.basic_data.show_basic_info()  # Вызываем метод из ClientData
         print(f"Инициалы: {self.initials}")
+
+    # метод str для форматированного вывода
+    def __str__(self):
+        return f"{self.basic_data}, Инициалы: {self.initials}"
 
 
 # Преобразование полного клиента в краткого
@@ -48,11 +59,11 @@ def create_short_client(client):
 try:
     # Создаем полного клиента
     client1 = Client("Мироненко", "Максим", "Алексеевич", "г. Краснодар", "+79284513781")
-    client1.show_info()  # Вывод полной информации
+    print(client1)  # Вывод полной информации через str
 
     # Преобразуем полного клиента в краткого
     short_client1 = create_short_client(client1)
-    short_client1.show_info()  # Вывод краткой информации
+    print(short_client1)  # Вывод краткой информации через str
 
 except Exception as e:
     print("Ошибка:", e)
